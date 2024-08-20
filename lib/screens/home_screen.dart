@@ -1,5 +1,7 @@
+import 'package:auth_firebase_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../providers/post_provider.dart';
 
@@ -13,7 +15,14 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Posts'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await ref.read(authenticationServiceProvider).signOut();
+                if (context.mounted) context.go('/login');
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: postsAsyncValue.when(
           data: (posts) {
