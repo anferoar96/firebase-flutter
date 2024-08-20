@@ -1,0 +1,19 @@
+import 'dart:js';
+
+import 'package:auth_firebase_app/screens/home_screen.dart';
+import 'package:auth_firebase_app/screens/register_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:riverpod/riverpod.dart';
+
+import '../screens/login_screen.dart';
+
+final GoRouter router = GoRouter(routes: [
+  GoRoute(
+      path: '/',
+      builder: (context, state) => const HomeScreen(),
+      redirect: (_, state) {
+        return '/login';
+      }),
+  GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
+  GoRoute(path: '/register', builder: (context, state) => RegisterScreen())
+]);
