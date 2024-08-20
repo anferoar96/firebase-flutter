@@ -1,3 +1,4 @@
+import 'package:auth_firebase_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +28,14 @@ class LoginScreen extends ConsumerWidget {
               obscureText: true,
               decoration: const InputDecoration(labelText: 'Password'),
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Login')),
+            ElevatedButton(
+                onPressed: () async {
+                  await ref.read(authenticationServiceProvider).signIn(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim());
+                  context.go('/');
+                },
+                child: const Text('Login')),
             TextButton(
                 onPressed: () => context.go('/register'),
                 child: const Text('Register'))
